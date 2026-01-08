@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интернет-журнал Name - Mobile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            max-width: 375px;
+            margin: 0 auto;
+            padding-bottom: 120px;
+        }
+
+        .top-banner {
+            background: linear-gradient(90deg, #4A90E2 0%, #67B5E8 100%);
+            color: white;
+            padding: 10px 0;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            max-width: 375px;
+            margin: 0 auto;
+        }
+
+        .banner-text {
+            white-space: nowrap;
+            animation: scroll 30s linear infinite;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        header {
+            background: #2c2c2c;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: fixed;
+            top: 40px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            max-width: 375px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 28px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: -2px;
+            flex-shrink: 0;
+        }
+
+        .search-bar {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 8px 40px 8px 15px;
+            border: none;
+            border-radius: 25px;
+            background: #3d3d3d;
+            color: white;
+            font-size: 14px;
+        }
+
+        .search-bar input::placeholder {
+            color: #999;
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn, .menu-btn {
+            background: #3d3d3d;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            font-size: 12px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            padding: 15px;
+            margin-top: 118px;
+        }
+
+        .site-title h1 {
+            font-size: 20px;
+            color: #2c2c2c;
+            margin-bottom: 5px;
+        }
+
+        .site-description {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .ad-banner {
+            background: linear-gradient(135deg, #E8B4D4 0%, #A8A4D9 100%);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            color: #4A4A8A;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .ad-banner h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .ad-banner p {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .article {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 15px;
+        }
+
+        .article-image {
+            width: calc(100% + 30px);
+            margin-left: -15px;
+            margin-right: -15px;
+            height: 250px;
+            background: linear-gradient(135deg, #9D6B53 0%, #C4825E 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .article-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            text-decoration: none;
+            display: block;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .article-excerpt {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 10px;
+            color: #999;
+            font-size: 11px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .read-more {
+            color: #FF9B42;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .article-reactions {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .reaction-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 6px 12px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border-radius: 20px;
+        }
+
+        .reaction-count {
+            font-size: 13px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .load-more-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .load-more-btn {
+            padding: 12px 30px;
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .page-numbers {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .page-number {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            color: #333;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .page-number.active {
+            background: #2c2c2c;
+            color: white;
+            border-color: #2c2c2c;
+        }
+
+        .page-info {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .related-posts {
+            margin-top: 30px;
+        }
+
+        .related-posts h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .post-card {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .post-card-image {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .post-card-title {
+            font-size: 13px;
+            line-height: 1.3;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .post-card-meta {
+            display: flex;
+            gap: 8px;
+            font-size: 10px;
+            color: #999;
+            flex-wrap: wrap;
+        }
+
+        .newsletter {
+            background: #2c2c2c;
+            border-radius: 10px;
+            padding: 25px 15px;
+            margin: 20px 0;
+        }
+
+        .newsletter-text h3 {
+            font-size: 20px;
+            color: white;
+            margin-bottom: 15px;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .newsletter-checkbox {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .newsletter-form input {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #3d3d3d;
+            color: white;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .newsletter-form input::placeholder {
+            color: #999;
+        }
+
+        .newsletter-form button {
+            padding: 12px 20px;
+            background: white;
+            color: #2c2c2c;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Burger Menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: none;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        .burger-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100%;
+            background: #2c2c2c;
+            z-index: 2001;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .burger-menu.active {
+            right: 0;
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #444;
+        }
+
+        .menu-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-section {
+            margin-bottom: 30px;
+        }
+
+        .menu-section-title {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .menu-links {
+            list-style: none;
+        }
+
+        .menu-links li {
+            margin-bottom: 15px;
+        }
+
+        .menu-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            display: block;
+            transition: color 0.2s;
+        }
+
+        .menu-links a:hover {
+            color: #4A90E2;
+        }
+
+        /* ЛИПКИЙ БАННЕР ВНИЗУ ЭКРАНА */
+        .sticky-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            text-align: center;
+            color: white;
+        }
+
+        .sticky-banner h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .sticky-banner p {
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .sticky-banner span {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        footer {
+            background: #e8e8e8;
+            padding: 20px 15px;
+            margin-top: 20px;
+        }
+
+        .footer-top {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: #333;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-icon {
+            width: 30px;
+            height: 30px;
+            color: #666;
+        }
+
+        .footer-tagline {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .footer-disclaimer {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-banner">
+        <div class="banner-text">
+            Создавать это круто! &nbsp;&nbsp;&nbsp; Создавать это круто! &nbsp;&nbsp;&nbsp; Создавать это круто! &nbsp;&nbsp;&nbsp; Создавать это круто!
+        </div>
+    </div>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- Burger Menu -->
+    <div class="burger-menu" id="burgerMenu">
+        <div class="menu-header">
+            <div class="logo" style="font-size: 24px;">logo</div>
+            <button class="menu-close" id="menuClose">×</button>
+        </div>
+
+        <div class="menu-section">
+            <h3 class="menu-section-title">Навигация</h3>
+            <ul class="menu-links">
+                <li><a href="#">Главная</a></li>
+                <li><a href="#">Все статьи</a></li>
+                <li><a href="#">Обзоры</a></li>
+                <li><a href="#">О проекте</a></li>
+                <li><a href="#">Контакты</a></li>
+                <li><a href="#">Реклама</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">logo</a>
+            <div class="search-bar">
+                <input type="text" placeholder="Поиск...">
+                <button>🔍</button>
+            </div>
+            <div class="header-buttons">
+                <button class="lang-btn">RU</button>
+                <button class="menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="site-title">
+            <h1>Интернет-журнал Name</h1>
+            <p class="site-description">Актуальные мнения, взгляды, обзоры, события, новости в фотографиях...</p>
+        </div>
+
+        <a href="#" class="ad-banner">
+            <h2>Fă doar un click</h2>
+            <p>și verifică simptomele legate de<br>afecțiunile glandei tiroide</p>
+            <span style="font-weight: 600;">www.tiroida.md</span>
+        </a>
+
+        <article class="article">
+            <a href="#" class="article-title">«Птички-коко» — выставка художника Дану Морарь <span style="color: #999; font-weight: 400;">/ Искусство</span></a>
+            <p class="article-excerpt">«Птички-коко» — новый проект художника Дану Морарь, посвящённый любимому городу. Через скульптуры, наброски и коллажи из дерева, фарфора, пластика и выдувного стекла Сергей вновь рассказывает небольшие истории о любимом городе.</p>
+            <div class="article-meta">
+                <span>📅 18.08.2015</span>
+                <span>👁 5684</span>
+                <span>✍ Danu Morari</span>
+            </div>
+            <div class="article-image">
+                <div style="width: 100px; height: 100px; background: #E8C299; border-radius: 50% 0 50% 50%; transform: rotate(-20deg);"></div>
+            </div>
+            <a href="#" class="read-more">Смотреть дольше ▸</a>
+            <div class="article-reactions">
+                <button class="reaction-btn">⭐ <span class="reaction-count">0</span></button>
+                <button class="reaction-btn">🔥 <span class="reaction-count">2</span></button>
+                <button class="reaction-btn">❤️ <span class="reaction-count">0</span></button>
+                <button class="reaction-btn">😎 <span class="reaction-count">1</span></button>
+            </div>
+        </article>
+
+        <article class="article">
+            <a href="#" class="article-title">Аманда Сейфрид: сюрреалистичный стиль <span style="color: #999; font-weight: 400;">/ Fashion Photo</span></a>
+            <p class="article-excerpt">Аманда Сейфрид демонстрирует смелые образы высокой моды для фотосессии в журнале WWW Magazine.</p>
+            <div class="article-meta">
+                <span>📅 28.12.2025</span>
+                <span>👁 4523</span>
+                <span>✍ Редакция</span>
+            </div>
+            <div class="article-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.3); border-radius: 50%;"></div>
+            </div>
+            <a href="#" class="read-more">Смотреть дольше ▸</a>
+            <div class="article-reactions">
+                <button class="reaction-btn">🔥 <span class="reaction-count">5</span></button>
+                <button class="reaction-btn">❤️ <span class="reaction-count">12</span></button>
+                <button class="reaction-btn">😎 <span class="reaction-count">3</span></button>
+            </div>
+        </article>
+
+        <div class="load-more-section">
+            <button class="load-more-btn">Показать еще</button>
+            <div class="page-numbers">
+                <a href="#" class="page-number active">1</a>
+                <a href="#" class="page-number">2</a>
+                <a href="#" class="page-number">3</a>
+                <span class="page-number" style="border: none;">...</span>
+                <a href="#" class="page-number">1463</a>
+            </div>
+            <div class="page-info">Показано 1-20 из 29244</div>
+        </div>
+
+        <div class="related-posts">
+            <h3>Читайте также</h3>
+            <div class="posts-grid">
+                <a href="#" class="post-card">
+                    <div class="post-card-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                    <h4 class="post-card-title">Марина Унгуряну для Brillence.md онлайн-журнала</h4>
+                    <div class="post-card-meta">
+                        <span>📅 18.08.2015</span>
+                        <span>👁 5684</span>
+                        <span>✍ Danu Morari</span>
+                    </div>
+                </a>
+
+                <a href="#" class="post-card">
+                    <div class="post-card-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                    <h4 class="post-card-title">Марина Унгуряну для Brillence.md онлайн-журнала</h4>
+                    <div class="post-card-meta">
+                        <span>📅 18.08.2015</span>
+                        <span>👁 5684</span>
+                        <span>✍ Danu Morari</span>
+                    </div>
+                </a>
+
+                <a href="#" class="post-card">
+                    <div class="post-card-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
+                    <h4 class="post-card-title">Марина Унгуряну для Brillence.md онлайн-журнала</h4>
+                    <div class="post-card-meta">
+                        <span>📅 18.08.2015</span>
+                        <span>👁 5684</span>
+                        <span>✍ Danu Morari</span>
+                    </div>
+                </a>
+
+                <a href="#" class="post-card">
+                    <div class="post-card-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                    <h4 class="post-card-title">Марина Унгуряну для Brillence.md онлайн-журнала</h4>
+                    <div class="post-card-meta">
+                        <span>📅 18.08.2015</span>
+                        <span>👁 5684</span>
+                        <span>✍ Danu Morari</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="newsletter">
+                <div class="newsletter-text">
+                    <h3>Получайте лучшие<br>статьи и обзоры первыми!</h3>
+                    <div class="newsletter-checkbox">
+                        <input type="checkbox" id="agree">
+                        <label for="agree">Даю согласие на обработку данных</label>
+                    </div>
+                </div>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Введите e-mail">
+                    <button>Подписаться</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЛИПКИЙ БАННЕР ВНИЗУ -->
+    <div class="sticky-banner">
+        <h3>Реклама</h3>
+        <p>Ваша реклама здесь</p>
+        <span>example.com</span>
+    </div>
+
+    <footer>
+        <div class="footer-top">
+            <div>© Name, 2025</div>
+            <div class="footer-links">
+                <a href="#">Лицензированное соглашение</a>
+                <a href="#">Правообладателям</a>
+                <a href="#">О проекте</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+            </svg>
+            <div>
+                <div class="footer-tagline">Развиваться - это весело!</div>
+                <p class="footer-disclaimer">Использование материалов Name разрешено только с предварительного согласия правообладателей. Все права на картинки и тексты принадлежат их авторам.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const menuBtn = document.querySelector('.menu-btn');
+        const burgerMenu = document.getElementById('burgerMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuClose = document.getElementById('menuClose');
+
+        menuBtn.addEventListener('click', () => {
+            burgerMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+        });
+
+        menuClose.addEventListener('click', () => {
+            burgerMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+
+        menuOverlay.addEventListener('click', () => {
+            burgerMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
